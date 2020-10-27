@@ -1,23 +1,15 @@
 # Helloworld Service
 
-This is the Helloworld service
+This is the Helloworld service for test
 
-Generated with
 
-```
-micro new helloworld
-```
 
 ## Usage
 
-Generate the proto code
 
-```
-make proto
-```
 
 Run the service
 
 ```
-micro run .
+micro run github.com/micro-community/helloworld
 ```
