@@ -6,6 +6,8 @@ github.com/blang/semver
 github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
+# github.com/desertbit/timer v0.0.0-20180107155436-c41aec40b27f
+github.com/desertbit/timer
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
 # github.com/golang/protobuf v1.4.3
@@ -21,6 +23,8 @@ github.com/google/go-github/v30/github
 github.com/google/go-querystring/query
 # github.com/google/uuid v1.1.2
 github.com/google/uuid
+# github.com/gorilla/websocket v1.4.2
+github.com/gorilla/websocket
 # github.com/hashicorp/go-version v1.2.1
 github.com/hashicorp/go-version
 # github.com/hpcloud/tail v1.0.0
@@ -29,13 +33,15 @@ github.com/hpcloud/tail/ratelimiter
 github.com/hpcloud/tail/util
 github.com/hpcloud/tail/watch
 github.com/hpcloud/tail/winfile
+# github.com/improbable-eng/grpc-web v0.13.0
+github.com/improbable-eng/grpc-web/go/grpcweb
 # github.com/inconshreveable/go-update v0.0.0-20160112193335-8152e7eb6ccf
 github.com/inconshreveable/go-update
 github.com/inconshreveable/go-update/internal/binarydist
 github.com/inconshreveable/go-update/internal/osext
 # github.com/juju/fslock v0.0.0-20160525022230-4d5c94c67b4b
 github.com/juju/fslock
-# github.com/micro/micro/v3 v3.0.0-beta.7
+# github.com/micro/micro/v3 v3.0.1
 github.com/micro/micro/v3/client/cli/namespace
 github.com/micro/micro/v3/client/cli/token
 github.com/micro/micro/v3/client/cli/util
@@ -82,15 +88,12 @@ github.com/micro/micro/v3/internal/network/tunnel
 github.com/micro/micro/v3/internal/network/tunnel/broker
 github.com/micro/micro/v3/internal/network/tunnel/mucp
 github.com/micro/micro/v3/internal/network/tunnel/transport
-github.com/micro/micro/v3/internal/registry
 github.com/micro/micro/v3/internal/report
 github.com/micro/micro/v3/internal/ring
 github.com/micro/micro/v3/internal/selector
 github.com/micro/micro/v3/internal/selector/roundrobin
 github.com/micro/micro/v3/internal/signal
 github.com/micro/micro/v3/internal/socket
-github.com/micro/micro/v3/internal/sync
-github.com/micro/micro/v3/internal/sync/memory
 github.com/micro/micro/v3/internal/tls
 github.com/micro/micro/v3/internal/usage
 github.com/micro/micro/v3/internal/usage/proto
@@ -119,7 +122,6 @@ github.com/micro/micro/v3/service/auth/jwt
 github.com/micro/micro/v3/service/auth/noop
 github.com/micro/micro/v3/service/broker
 github.com/micro/micro/v3/service/broker/client
-github.com/micro/micro/v3/service/broker/http
 github.com/micro/micro/v3/service/broker/memory
 github.com/micro/micro/v3/service/build
 github.com/micro/micro/v3/service/build/golang
@@ -146,15 +148,12 @@ github.com/micro/micro/v3/service/events/util
 github.com/micro/micro/v3/service/logger
 github.com/micro/micro/v3/service/metrics
 github.com/micro/micro/v3/service/metrics/noop
-github.com/micro/micro/v3/service/model
-github.com/micro/micro/v3/service/model/mud
 github.com/micro/micro/v3/service/network
 github.com/micro/micro/v3/service/network/mucp
 github.com/micro/micro/v3/service/network/mucp/proto
 github.com/micro/micro/v3/service/proxy
 github.com/micro/micro/v3/service/proxy/mucp
 github.com/micro/micro/v3/service/registry
-github.com/micro/micro/v3/service/registry/cache
 github.com/micro/micro/v3/service/registry/client
 github.com/micro/micro/v3/service/registry/mdns
 github.com/micro/micro/v3/service/registry/memory
@@ -189,10 +188,14 @@ github.com/pkg/errors
 github.com/pmezard/go-difflib/difflib
 # github.com/rhysd/go-github-selfupdate v1.2.2
 github.com/rhysd/go-github-selfupdate/selfupdate
+# github.com/rs/cors v1.7.0
+github.com/rs/cors
 # github.com/russross/blackfriday/v2 v2.0.1
 github.com/russross/blackfriday/v2
 # github.com/shurcooL/sanitized_anchor_name v1.0.0
 github.com/shurcooL/sanitized_anchor_name
+# github.com/soheilhy/cmux v0.1.4
+github.com/soheilhy/cmux
 # github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
 # github.com/tcnksm/go-gitconfig v0.1.2

@@ -213,9 +213,20 @@ func splitCmdArgs(arguments []string) ([]string, map[string][]string, error) {
 	args := []string{}
 	flags := map[string][]string{}
 
+	prev := ""
 	for _, a := range arguments {
 		if !strings.HasPrefix(a, "--") {
-			args = append(args, a)
+			if len(prev) == 0 {
+				args = append(args, a)
+				continue
+			}
+			_, exists := flags[prev]
+			if !exists {
+				flags[prev] = []string{}
+			}
+
+			flags[prev] = append(flags[prev], a)
+			prev = ""
 			continue
 		}
 
@@ -227,7 +238,7 @@ func splitCmdArgs(arguments []string) ([]string, map[string][]string, error) {
 		}
 		switch len(comps) {
 		case 1:
-			flags[comps[0]] = append(flags[comps[0]], "")
+			prev = comps[0]
 		case 2:
 			flags[comps[0]] = append(flags[comps[0]], comps[1])
 		default:
@@ -281,6 +292,9 @@ func flagsToRequest(flags map[string][]string, req *goregistry.Value) (map[strin
 	coerceValue := func(valueType string, value []string) (interface{}, error) {
 		switch valueType {
 		case "bool":
+			if len(value) == 0 || len(strings.TrimSpace(value[0])) == 0 {
+				return true, nil
+			}
 			return strconv.ParseBool(value[0])
 		case "int32":
 			return strconv.Atoi(value[0])
@@ -386,8 +400,8 @@ loop:
 				}
 
 				if _, ok := result[attr.Name]; !ok {
-					result[attr.Name] = map[string]string{}
-				} else if _, ok := result[attr.Name].(map[string]string); !ok {
+					result[attr.Name] = map[string]interface{}{}
+				} else if _, ok := result[attr.Name].(map[string]interface{}); !ok {
 					return nil, fmt.Errorf("Error parsing request, duplicate key: %v", key)
 				}
 				parsed, err := coerceValue(attr2.Type, value)
@@ -398,7 +412,6 @@ loop:
 				continue loop
 			}
 		}
-
 		return nil, fmt.Errorf("Unknown flag: %v", key)
 	}
 

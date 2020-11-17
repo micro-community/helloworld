@@ -249,18 +249,16 @@ func action(c *cli.Context) error {
 		// execute the Config.Set RPC, setting the flags in the
 		// request.
 		if srv, ns, err := lookupService(c); err != nil {
-			fmt.Printf("Error querying registry for service %v: %v", c.Args().First(), err)
-			os.Exit(1)
+			return util.CliError(err)
 		} else if srv != nil && shouldRenderHelp(c) {
-			fmt.Println(formatServiceUsage(srv, c))
-			os.Exit(1)
+			return cli.Exit(formatServiceUsage(srv, c), 0)
 		} else if srv != nil {
-			if err := callService(srv, ns, c); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-			os.Exit(0)
+			err := callService(srv, ns, c)
+			return util.CliError(err)
 		}
+
+		// srv == nil
+		return helper.UnexpectedCommand(c)
 
 	}
 
@@ -290,6 +288,16 @@ func New(opts ...Option) *command {
 		cmd.service = true
 		cmd.app.Action = func(ctx *cli.Context) error { return nil }
 	}
+
+	//flags to add
+	if len(options.Flags) > 0 {
+		cmd.app.Flags = append(cmd.app.Flags, options.Flags...)
+	}
+	//action to replace
+	if options.Action != nil {
+		cmd.app.Action = options.Action
+	}
+	// cmd to add to use registry
 
 	return cmd
 }
@@ -421,7 +429,7 @@ func (c *command) Before(ctx *cli.Context) error {
 	if len(ctx.String("auth_public_key")) > 0 || len(ctx.String("auth_private_key")) > 0 {
 		authOpts = append(authOpts, auth.PublicKey(ctx.String("auth_public_key")))
 		authOpts = append(authOpts, auth.PrivateKey(ctx.String("auth_private_key")))
-	} else if ctx.Args().First() == "server" {
+	} else if ctx.Args().First() == "server" || ctx.Args().First() == "service" {
 		privKey, pubKey, err := user.GetJWTCerts()
 		if err != nil {
 			logger.Fatalf("Error getting keys: %v", err)
@@ -507,6 +515,9 @@ func (c *command) Before(ctx *cli.Context) error {
 	if err := broker.DefaultBroker.Init(brokerOpts...); err != nil {
 		logger.Fatalf("Error configuring broker: %v", err)
 	}
+	if err := broker.DefaultBroker.Connect(); err != nil {
+		logger.Fatalf("Error connecting to broker: %v", err)
+	}
 
 	// Setup runtime. This is a temporary fix to trigger the runtime to recreate
 	// its client now the client has been replaced with a wrapped one.
@@ -563,6 +574,15 @@ func (c *command) Init(opts ...Option) error {
 	}
 	c.app.HideVersion = len(c.opts.Version) == 0
 	c.app.Usage = c.opts.Description
+
+	//allow user's flags to add
+	if len(c.opts.Flags) > 0 {
+		c.app.Flags = append(c.app.Flags, c.opts.Flags...)
+	}
+	//action to replace
+	if c.opts.Action != nil {
+		c.app.Action = c.opts.Action
+	}
 
 	return nil
 }
