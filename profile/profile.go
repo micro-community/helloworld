@@ -3,7 +3,7 @@ package profile
 import (
 	"github.com/micro/micro/v3/service/auth"
 	"github.com/micro/micro/v3/service/auth/noop"
-	"github.com/micro/micro/v3/service/broker/http"
+	mBroker "github.com/micro/micro/v3/service/broker/memory"
 	"github.com/micro/micro/v3/service/config"
 	"github.com/micro/micro/v3/service/config/env"
 	"github.com/micro/micro/v3/service/events"
@@ -44,7 +44,7 @@ var Dev = &profile.Profile{
 			logger.Fatalf("Error configuring stream for dev: %v", err)
 		}
 
-		profile.SetupBroker(http.NewBroker())
+		profile.SetupBroker(mBroker.NewBroker())
 		profile.SetupRegistry(mregistry.NewRegistry())
 		// store.DefaultBlobStore, err = fstore.NewBlobStore()
 		// if err != nil {
